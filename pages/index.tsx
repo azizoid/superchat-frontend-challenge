@@ -12,6 +12,7 @@ import {
   ButtonActions,
 } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../components/Loader/Loader"
+import { Preview } from "../components/Preview/Preview"
 
 export enum PageStateProps {
   Init,
@@ -145,7 +146,15 @@ const Home: NextPage = () => {
             )}
           </div>
         </div>
-        <div className="col-7 text-center">Preview Area</div>
+        <div className="col-7 text-center">
+          {pageState === PageStateProps.Ready &&
+            user &&
+            repo &&
+            action &&
+            theme && (
+              <Preview user={user} repo={repo} action={action} theme={theme} />
+            )}
+        </div>
       </div>
     </main>
   )
