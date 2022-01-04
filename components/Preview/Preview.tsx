@@ -25,6 +25,7 @@ import { BiUser } from "react-icons/bi"
 import { RiGithubLine } from "react-icons/ri"
 
 import styles from "./Preview.module.scss"
+import { TweetBtn } from "../../ui/TweetBtn/TweetBtn"
 
 export type PreviewProps = {
   user: GetUserProps
@@ -105,7 +106,9 @@ export const Preview = ({
             {!tweetId.length ? (
               <small>Please press Save button to be able to share</small>
             ) : (
-              <div data-cy="social-links">tweet button</div>
+              <div data-cy="social-links">
+                <TweetBtn urlId={tweetId} />
+              </div>
             )}
           </div>
         </div>
