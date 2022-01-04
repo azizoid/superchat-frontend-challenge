@@ -14,6 +14,19 @@ export default class MyDocument extends Document {
               <a className="navbar-brand" href="#">
                 SuperChat link generator
               </a>
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <a
+                    className="nav-link active"
+                    aria-current="page"
+                    href="https://github.com/azizoid/superchat-frontend-challenge"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Fork it on Github
+                  </a>
+                </li>
+              </ul>
             </div>
           </nav>
           <Main />
