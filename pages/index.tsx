@@ -4,6 +4,7 @@ import {
   ActionButtons,
   ButtonActions,
 } from "../components/ActionsBar/ActionsBar"
+import { Loader } from "../components/Loader/Loader"
 import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
 import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
@@ -29,6 +30,7 @@ const Home: NextPage = () => {
 
   const onSubmitHandler = (event: React.SyntheticEvent) => {
     event.preventDefault()
+    setPageState(PageStateProps.Loading)
 
     if (!username?.length) return
 
@@ -87,6 +89,14 @@ const Home: NextPage = () => {
                 data-cy="noRepositoryPanel"
               >
                 No repositories to display
+              </span>
+            )}
+            {pageState === PageStateProps.Loading && (
+              <span
+                className="list-group-item text-center"
+                data-cy="loadingPanel"
+              >
+                <Loader />
               </span>
             )}
           </div>
