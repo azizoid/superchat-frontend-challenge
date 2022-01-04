@@ -117,6 +117,7 @@ const Home: NextPage = () => {
                 type="button"
                 className="btn btn-outline-danger"
                 onClick={onPreviewSaveHandler}
+                disabled={!!tweetId || !user || !repo}
                 data-cy="saveBtn"
               >
                 Save
