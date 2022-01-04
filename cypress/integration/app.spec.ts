@@ -1,5 +1,25 @@
 describe('Home Page', () => {
   beforeEach(() => {
+    cy.intercept('GET', 'https://api.github.com/users/**', (req) => {
+      req.reply({ fixture: 'getUser.json' })
+    }).as('getUser')
+    cy.intercept('GET', 'https://api.github.com/users/**/repos', (req) => {
+      req.reply({ fixture: 'getRepos.json' })
+    }).as('getRepos')
+    cy.intercept('GET', 'https://api.github.com/repos/**', (req) => {
+      req.reply({ fixture: 'getRepoDetails.json' })
+    }).as('getRepoDetails')
+    cy.intercept('GET', 'https://api.github.com/repos/**/contributors?per_page=10&anon=true', (req) => {
+      req.reply({ fixture: 'getContributors.json' })
+    }).as('getContributors')
+
+    cy.intercept('POST', 'https://api.github.com/api/githublink/*', (req) => {
+      req.reply({
+        statusCode: 200,
+        fixture: 'savePreviewData.json'
+      })
+    }).as('savePreviewData')
+
     cy.visit('http://localhost:3000')
   })
 
