@@ -7,10 +7,7 @@ import { BsGithub } from "react-icons/bs"
 import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
 import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
-import {
-  ActionButtons,
-  ButtonActions,
-} from "../components/ActionsBar/ActionsBar"
+import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../components/Loader/Loader"
 import { Preview } from "../components/Preview/Preview"
 
@@ -106,7 +103,7 @@ const Home: NextPage = () => {
           <hr />
 
           <div className="row">
-            <ActionButtons action={action} setAction={setAction} />
+            <ActionsBar action={action} setAction={setAction} />
           </div>
 
           <hr />

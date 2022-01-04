@@ -67,15 +67,15 @@ export const githubActionsButtonList = [
   },
 ]
 
-export type ActionButtonsProps = {
+export type ActionsBarProps = {
   action: ButtonActions
   setAction: Function
 }
 
-export const ActionButtons = ({
+export const ActionsBar = ({
   action,
   setAction,
-}: ActionButtonsProps): JSX.Element => (
+}: ActionsBarProps): JSX.Element => (
   <div className="list-group list-group-horizontal" data-cy="actions_bar">
     {githubActionsButtonList.map(({ title, icon }) => (
       <a
