@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react"
+import Image from "next/image"
 
 import classNames from "classnames"
 
@@ -69,7 +70,20 @@ export const Preview = ({
         </div>
       </div>
 
-      <div className={classNames("col-4")}>Repo Description</div>
+      <div className={classNames("col-4")}>
+        <div className="card text-start">
+          <h6 className="card-header">Description</h6>
+          <div className="card-body">{repoDetails?.description}</div>
+
+          <Image
+            src={user.avatar_url}
+            className="rounded"
+            alt={user.username}
+            width="200"
+            height="200"
+          />
+        </div>
+      </div>
 
       <div className={classNames("col-4")}>Top Contributors</div>
     </div>
