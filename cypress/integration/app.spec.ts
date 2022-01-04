@@ -23,4 +23,8 @@ describe('Home Page', () => {
       .click()
       .get('#repositoryList')
   })
+
+  it('changes theme on theme button click', () => {
+    cy.get('button[data-cy=darkModeBtn]').click().get('button[data-cy=lightModeBtn')
+  })
 })
