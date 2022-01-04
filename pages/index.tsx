@@ -10,6 +10,7 @@ import { getUser, GetUserProps } from "../utils/getUser/getUser"
 import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../components/Loader/Loader"
 import { Preview } from "../components/Preview/Preview"
+import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
 
 export enum PageStateProps {
   Init,
@@ -42,6 +43,16 @@ const Home: NextPage = () => {
       .then((data) => setUser(data))
       .catch(() => setPageState(PageStateProps.Error))
       .finally(() => setPageState(PageStateProps.Ready))
+  }
+
+  const onPreviewSaveHandler = () => {
+    if (user && repo && action && theme) {
+      savePreviewData({ username: user.username, repo, action, theme })
+        .then((data) => {
+          /* get tweet id to share */
+        })
+        .catch((error) => console.error(error))
+    }
   }
 
   useEffect(() => {
@@ -97,6 +108,15 @@ const Home: NextPage = () => {
                   <MdDarkMode /> Mode
                 </button>
               )}
+
+              <button
+                type="button"
+                className="btn btn-outline-danger"
+                onClick={onPreviewSaveHandler}
+                data-cy="saveBtn"
+              >
+                Save
+              </button>
             </div>
           </form>
 
