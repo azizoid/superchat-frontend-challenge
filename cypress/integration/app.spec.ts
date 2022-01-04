@@ -27,4 +27,21 @@ describe('Home Page', () => {
   it('changes theme on theme button click', () => {
     cy.get('button[data-cy=darkModeBtn]').click().get('button[data-cy=lightModeBtn')
   })
+
+  it('tests the whole cycle', () => {
+    cy.get('[data-cy=noRepositoryPanel]')
+    cy.get('input[type=text]').type('azizoid')
+
+    cy.get('button[type=submit]')
+      .click()
+
+    cy.get('#repositoryList')
+      .get('a[data-cy=repository-item]')
+      .first()
+      .click()
+
+    cy.get('button[data-cy=saveBtn]').should('be.enabled').click()
+
+    cy.get('[data-cy=preview]').get('[data-cy=social-links]').should('be.visible')
+  })
 })
