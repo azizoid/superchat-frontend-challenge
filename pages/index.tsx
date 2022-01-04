@@ -26,6 +26,7 @@ const Home: NextPage = () => {
   const [repo, setRepo] = useState<string>("")
   const [repositories, setRepositories] = useState<GetRepoProps[]>([])
   const [theme, setTheme] = useState<"dark" | "light">("dark")
+  const [tweetId, setTweetId] = useState<string>("")
 
   const [pageState, setPageState] = useState(PageStateProps.Init)
 
@@ -48,9 +49,7 @@ const Home: NextPage = () => {
   const onPreviewSaveHandler = () => {
     if (user && repo && action && theme) {
       savePreviewData({ username: user.username, repo, action, theme })
-        .then((data) => {
-          /* get tweet id to share */
-        })
+        .then((data) => setTweetId(data.data.id))
         .catch((error) => console.error(error))
     }
   }
@@ -169,7 +168,13 @@ const Home: NextPage = () => {
             repo &&
             action &&
             theme && (
-              <Preview user={user} repo={repo} action={action} theme={theme} />
+              <Preview
+                user={user}
+                repo={repo}
+                action={action}
+                theme={theme}
+                tweetId={tweetId}
+              />
             )}
         </div>
       </div>

@@ -31,6 +31,7 @@ export type PreviewProps = {
   repo: string
   action: ButtonActions
   theme: "light" | "dark"
+  tweetId: string
 }
 
 export const Preview = ({
@@ -38,6 +39,7 @@ export const Preview = ({
   repo,
   action,
   theme = "light",
+  tweetId,
 }: PreviewProps): JSX.Element => {
   const [contributors, setContributors] =
     useState<ContributorsResponseProps[]>()
@@ -99,6 +101,12 @@ export const Preview = ({
               {actionButton} <span>{action}</span> |{" "}
               <span>{repoDetails?.stargazers_count}</span>
             </button>
+            <hr />
+            {!tweetId.length ? (
+              <small>Please press Save button to be able to share</small>
+            ) : (
+              <div data-cy="social-links">tweet button</div>
+            )}
           </div>
         </div>
       </div>
