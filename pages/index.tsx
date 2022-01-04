@@ -46,15 +46,16 @@ export const Home: NextPage = () => {
     event.preventDefault()
     setPageState(PageStateProps.Loading)
 
-    if (username?.length === 0) {
-      setPageState(PageStateProps.Error)
-      return
-    }
-
-    getUser(username)
-      .then((data) => setUser(data))
-      .catch(() => setPageState(PageStateProps.Error))
-      .finally(() => setPageState(PageStateProps.Ready))
+    if (!username?.length) setPageState(PageStateProps.Error)
+    else
+      getUser(username)
+        .then((data) => setUser(data))
+        .then(() => setPageState(PageStateProps.Ready))
+        .catch(() => {
+          console.warn("username", username)
+          setUser(undefined)
+          setPageState(PageStateProps.Error)
+        })
   }
 
   const onPreviewSaveHandler = () => {
@@ -66,7 +67,7 @@ export const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    if (user?.username && pageState === PageStateProps.Ready) {
+    if (user?.username) {
       getRepos(user.username)
         .then((data) => {
           setRepo("")
@@ -77,7 +78,7 @@ export const Home: NextPage = () => {
     } else {
       setRepositories([])
     }
-  }, [pageState, user?.username])
+  }, [user?.username])
 
   useEffect(() => {
     setTweetId("")
