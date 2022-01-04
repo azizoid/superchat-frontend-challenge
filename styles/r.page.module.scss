@@ -1,5 +1,5 @@
 .previewPage {
-  height: 100vh;
+  height: calc(100vh - 82px); //height of navbar + margins of pageHeader
   display: flex;
   align-items: center;
 }
