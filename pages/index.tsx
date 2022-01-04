@@ -85,6 +85,7 @@ const Home: NextPage = () => {
                   type="button"
                   className="btn btn-outline-warning"
                   onClick={() => setTheme("dark")}
+                  data-cy="lightModeBtn"
                 >
                   <MdLightMode /> Mode
                 </button>
@@ -93,6 +94,7 @@ const Home: NextPage = () => {
                   type="button"
                   className="btn btn-outline-dark"
                   onClick={() => setTheme("light")}
+                  data-cy="darkModeBtn"
                 >
                   <MdDarkMode /> Mode
                 </button>
