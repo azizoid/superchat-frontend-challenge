@@ -44,6 +44,25 @@ export const Preview = ({
     return output?.icon
   }, [action])
 
+  const onStarHandler = () => {
+    // TODO: implement authorisation and then try to star
+    user?.username &&
+      fetch(`https://api.github.com/user/starred/${user.username}/${repo}`, {
+        method: "PUT",
+        headers: {
+          "Content-Length": "0",
+        },
+      })
+        .then((data) => {
+          console.log(data)
+        })
+        .catch((error) => {
+          // For now will error with 401 because we are not authorisated
+          console.error(error)
+        })
+        .finally(() => alert("Star / Unstar handler"))
+  }
+
   useEffect(() => {
     getRepoDetails({ username: user.username, repo }).then(
       (data) => data && setRepoDetails(data)
@@ -71,6 +90,7 @@ export const Preview = ({
                 theme === "light" ? "btn-light" : "btn-dark",
                 styles.actionButton
               )}
+              onClick={onStarHandler}
             >
               {actionButton} <span>{action}</span> |{" "}
               <span>{repoDetails?.stargazers_count}</span>
