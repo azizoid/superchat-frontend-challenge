@@ -11,6 +11,7 @@ import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../ui/Loader/Loader"
 import { Preview } from "../components/Preview/Preview"
 import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
+import { ProgressBar } from "../components/ProgressBar/ProgressBar"
 
 export enum PageStateProps {
   Init,
@@ -163,6 +164,9 @@ const Home: NextPage = () => {
           </div>
         </div>
         <div className="col-7 text-center">
+          <ProgressBar user={user} repo={repo} tweetId={tweetId} />
+
+          <hr />
           {pageState === PageStateProps.Ready &&
             user &&
             repo &&
