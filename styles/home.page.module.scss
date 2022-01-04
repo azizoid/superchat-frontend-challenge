@@ -1,0 +1,13 @@
+.home {
+  height: calc(100vh - 82px); //height of navbar + margins of pageHeader
+
+  .pageHeader {
+    margin-top: 24px;
+    margin-bottom: 48px;
+  }
+
+  .repositoryList {
+    height: calc(100vh - 310px);
+    overflow-y: scroll;
+  }
+}

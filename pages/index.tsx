@@ -13,6 +13,10 @@ import { Preview, PreviewProps } from "../components/Preview/Preview"
 import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
 import { ProgressBar } from "../components/ProgressBar/ProgressBar"
 import { NotFound } from "../ui/NotFound/NotFound"
+import Head from "next/head"
+import classNames from "classnames"
+
+import styles from "../styles/home.page.module.scss"
 
 export enum PageStateProps {
   Init,
@@ -77,121 +81,133 @@ export const Home: NextPage = () => {
   }, [action, repo, theme, user])
 
   return (
-    <main className="container">
-      <h3>Creative GitHub Link Generator</h3>
+    <main className={styles.home}>
+      <Head>
+        <link rel="shortcut icon" href="/static/favicon.ico" />
+        <meta name="author" content="Aziz" />
+        <title>Superchat Frontend Challenge</title>
+      </Head>
+      <div className="container">
+        <h3 className={styles.pageHeader}>Creative GitHub Link Generator</h3>
 
-      <div className="row">
-        <div className="col-5">
-          <form className="form-inline" onSubmit={onSubmitHandler}>
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Username"
-                aria-label="Username"
-                onChange={onUsernameChangeHandler}
-              />
+        <div className="row">
+          <div className="col-5">
+            <form className="form-inline" onSubmit={onSubmitHandler}>
+              <div className="input-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Username"
+                  aria-label="Username"
+                  onChange={onUsernameChangeHandler}
+                />
 
-              <button type="submit" className="btn btn-outline-primary">
-                Repos
-              </button>
+                <button type="submit" className="btn btn-outline-primary">
+                  Repos
+                </button>
 
-              {theme === "light" ? (
+                {theme === "light" ? (
+                  <button
+                    type="button"
+                    className="btn btn-outline-warning"
+                    onClick={() => setTheme("dark")}
+                    data-cy="lightModeBtn"
+                  >
+                    <MdLightMode /> Mode
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    className="btn btn-outline-dark"
+                    onClick={() => setTheme("light")}
+                    data-cy="darkModeBtn"
+                  >
+                    <MdDarkMode /> Mode
+                  </button>
+                )}
+
                 <button
                   type="button"
-                  className="btn btn-outline-warning"
-                  onClick={() => setTheme("dark")}
-                  data-cy="lightModeBtn"
+                  className="btn btn-outline-danger"
+                  onClick={onPreviewSaveHandler}
+                  disabled={!!tweetId || !user || !repo}
+                  data-cy="saveBtn"
                 >
-                  <MdLightMode /> Mode
+                  Save
                 </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-outline-dark"
-                  onClick={() => setTheme("light")}
-                  data-cy="darkModeBtn"
-                >
-                  <MdDarkMode /> Mode
-                </button>
-              )}
-
-              <button
-                type="button"
-                className="btn btn-outline-danger"
-                onClick={onPreviewSaveHandler}
-                disabled={!!tweetId || !user || !repo}
-                data-cy="saveBtn"
-              >
-                Save
-              </button>
-            </div>
-          </form>
-
-          <hr />
-
-          <div className="row">
-            <ActionsBar action={action} setAction={setAction} />
-          </div>
-
-          <hr />
-
-          <div className="row">
-            {pageState === PageStateProps.Init && (
-              <span
-                className="list-group-item text-center"
-                data-cy="noRepositoryPanel"
-              >
-                No repositories to display
-              </span>
-            )}
-            {pageState === PageStateProps.Loading && (
-              <span
-                className="list-group-item text-center"
-                data-cy="loadingPanel"
-              >
-                <Loader />
-              </span>
-            )}
-            {pageState === PageStateProps.Ready && (
-              <div className="list-group list-group-flush" id="repositoryList">
-                {repositories.length > 0 &&
-                  repositories?.map(({ id, name, html_url }) => (
-                    <a
-                      key={id}
-                      className="list-group-item list-group-item-action"
-                      onClick={() => setRepo(name)}
-                      data-cy="repository-item"
-                    >
-                      <BsGithub /> {name} <br />
-                      <small>{html_url}</small>
-                    </a>
-                  ))}
               </div>
+            </form>
+
+            <hr />
+
+            <div className="row">
+              <ActionsBar action={action} setAction={setAction} />
+            </div>
+
+            <hr />
+
+            <div className="row">
+              {pageState === PageStateProps.Init && (
+                <span
+                  className="list-group-item text-center"
+                  data-cy="noRepositoryPanel"
+                >
+                  No repositories to display
+                </span>
+              )}
+              {pageState === PageStateProps.Loading && (
+                <span
+                  className="list-group-item text-center"
+                  data-cy="loadingPanel"
+                >
+                  <Loader />
+                </span>
+              )}
+              {pageState === PageStateProps.Ready && (
+                <div
+                  className={classNames(
+                    "list-group list-group-flush",
+                    styles.repositoryList
+                  )}
+                >
+                  {repositories.length > 0 &&
+                    repositories?.map(({ id, name, html_url }) => (
+                      <a
+                        key={id}
+                        className="list-group-item list-group-item-action"
+                        onClick={() => setRepo(name)}
+                        data-cy="repository-item"
+                      >
+                        <BsGithub /> {name} <br />
+                        <small>{html_url}</small>
+                      </a>
+                    ))}
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="col-7 text-center">
+            <ProgressBar user={user} repo={repo} tweetId={tweetId} />
+
+            <hr />
+
+            {pageState === PageStateProps.Ready &&
+              user &&
+              repo &&
+              action &&
+              theme && (
+                <Preview
+                  user={user}
+                  repo={repo}
+                  action={action}
+                  theme={theme}
+                  tweetId={tweetId}
+                />
+              )}
+            {pageState === PageStateProps.Error && (
+              <NotFound message="User Not Found." />
             )}
           </div>
-        </div>
-        <div className="col-7 text-center">
-          <ProgressBar user={user} repo={repo} tweetId={tweetId} />
-
-          <hr />
-
-          {pageState === PageStateProps.Ready &&
-            user &&
-            repo &&
-            action &&
-            theme && (
-              <Preview
-                user={user}
-                repo={repo}
-                action={action}
-                theme={theme}
-                tweetId={tweetId}
-              />
-            )}
-          {pageState === PageStateProps.Error && (
-            <NotFound message="User Not Found." />
-          )}
         </div>
       </div>
     </main>
