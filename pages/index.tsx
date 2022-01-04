@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import { ChangeEvent, useEffect, useState } from "react"
 
+import { MdLightMode, MdDarkMode } from "react-icons/md"
 import { BsGithub } from "react-icons/bs"
 
 import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
   const [action, setAction] = useState<ButtonActions>(ButtonActions.Follow) //I prefer to state the type even if we state default value. for the structure of the code
   const [repo, setRepo] = useState<string>("")
   const [repositories, setRepositories] = useState<GetRepoProps[]>([])
+  const [theme, setTheme] = useState<"dark" | "light">("dark")
 
   const [pageState, setPageState] = useState(PageStateProps.Init)
 
@@ -77,6 +79,24 @@ const Home: NextPage = () => {
               <button type="submit" className="btn btn-outline-primary">
                 Repos
               </button>
+
+              {theme === "light" ? (
+                <button
+                  type="button"
+                  className="btn btn-outline-warning"
+                  onClick={() => setTheme("dark")}
+                >
+                  <MdLightMode /> Mode
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="btn btn-outline-dark"
+                  onClick={() => setTheme("light")}
+                >
+                  <MdDarkMode /> Mode
+                </button>
+              )}
             </div>
           </form>
 
