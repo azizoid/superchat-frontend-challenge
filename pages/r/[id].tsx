@@ -3,12 +3,14 @@ import { NextPage } from "next"
 import { useRouter } from "next/router"
 
 import { PageStateProps } from "../index"
-import { Loader } from "../../ui/Loader/Loader"
-
-import styles from "../../styles/r.page.module.scss"
 import { Data } from "../../store/_data"
 import { getUser, GetUserProps } from "../../utils/getUser/getUser"
 import { Preview } from "../../components/Preview/Preview"
+
+import { Loader } from "../../ui/Loader/Loader"
+import { NotFound } from "../../ui/NotFound/NotFound"
+
+import styles from "../../styles/r.page.module.scss"
 
 export const GetGithubLink: NextPage = () => {
   const router = useRouter()
@@ -54,6 +56,9 @@ export const GetGithubLink: NextPage = () => {
             <span className="list-group-item text-center">
               <Loader />
             </span>
+          )}
+          {pageState === PageStateProps.Error && (
+            <NotFound message="User Not Found." />
           )}
           {pageState === PageStateProps.Ready && previewData && user && (
             <Preview
