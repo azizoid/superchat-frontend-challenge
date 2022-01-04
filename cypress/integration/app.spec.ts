@@ -14,4 +14,13 @@ describe('Home Page', () => {
 
     cy.get('[data-cy=preview]').should('not.exist')
   })
+
+  it('gets repository list by username', () => {
+    cy.get('#repositoryList').should("not.exist")
+
+    cy.get('input[type=text]').type('azizoid')
+    cy.get('button[type=submit]')
+      .click()
+      .get('#repositoryList')
+  })
 })
