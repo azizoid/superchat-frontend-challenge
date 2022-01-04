@@ -84,13 +84,17 @@ export const Preview = ({
   return (
     <div className="row" data-cy="preview">
       <div className={classNames("col-4", styles.preview)}>
-        <div className="card text-start">
+        <div className="card text-start" data-cy="basic-info">
           <h6 className="card-header">Basic Info</h6>
 
           <div className={classNames("card-body", styles.data)}>
-            <BiUser /> {user.username}
+            <span data-cy="preview-username">
+              <BiUser /> {user.username}
+            </span>
             <hr />
-            <RiGithubLine /> {repo}
+            <span data-cy="preview-repo">
+              <RiGithubLine /> {repo}
+            </span>
             <hr />
             <button
               className={classNames(
@@ -100,9 +104,12 @@ export const Preview = ({
                 styles.actionButton
               )}
               onClick={onStarHandler}
+              data-cy="preview-theme"
             >
               {actionButton} <span>{action}</span> |{" "}
-              <span>{repoDetails?.stargazers_count}</span>
+              <span data-cy="preview-stars">
+                {repoDetails?.stargazers_count}
+              </span>
             </button>
             <hr />
             {!tweetId.length ? (
@@ -126,7 +133,7 @@ export const Preview = ({
         />
       </div>
 
-      <div className={classNames("col-4")}>
+      <div className={classNames("col-4")} data-cy="preview-contributors">
         <TopContributors contributors={contributors} />
       </div>
     </div>
