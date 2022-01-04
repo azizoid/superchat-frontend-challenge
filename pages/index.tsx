@@ -46,7 +46,10 @@ export const Home: NextPage = () => {
     event.preventDefault()
     setPageState(PageStateProps.Loading)
 
-    if (!username?.length) return
+    if (username?.length === 0) {
+      setPageState(PageStateProps.Error)
+      return
+    }
 
     getUser(username)
       .then((data) => setUser(data))
@@ -63,7 +66,7 @@ export const Home: NextPage = () => {
   }
 
   useEffect(() => {
-    if (user?.username) {
+    if (user?.username && pageState === PageStateProps.Ready) {
       getRepos(user.username)
         .then((data) => {
           setRepo("")
@@ -74,7 +77,7 @@ export const Home: NextPage = () => {
     } else {
       setRepositories([])
     }
-  }, [user?.username])
+  }, [pageState, user?.username])
 
   useEffect(() => {
     setTweetId("")
@@ -91,7 +94,7 @@ export const Home: NextPage = () => {
         <h3 className={styles.pageHeader}>Creative GitHub Link Generator</h3>
 
         <div className="row">
-          <div className="col-5">
+          <div className="col-md-12 col-lg-5">
             <form className="form-inline" onSubmit={onSubmitHandler}>
               <div className="input-group">
                 <input
@@ -187,7 +190,7 @@ export const Home: NextPage = () => {
               )}
             </div>
           </div>
-          <div className="col-7 text-center">
+          <div className="col-md-12 col-lg-7 text-center">
             <ProgressBar user={user} repo={repo} tweetId={tweetId} />
 
             <hr />
