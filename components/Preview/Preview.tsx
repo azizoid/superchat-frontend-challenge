@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react"
-import Image from "next/image"
 
 import classNames from "classnames"
 
@@ -9,18 +8,23 @@ import {
 } from "../ActionsBar/ActionsBar"
 import { GetUserProps } from "../../utils/getUser/getUser"
 
-import { BiUser } from "react-icons/bi"
-import { RiGithubLine } from "react-icons/ri"
-
-import styles from "./Preview.module.scss"
-import {
-  getRepoDetails,
-  RepoDetailsResponseProps,
-} from "../../utils/getRepoDetails/getRepoDetails"
 import {
   ContributorsResponseProps,
   getContributors,
 } from "../../utils/getContributors/getContributors"
+
+import {
+  getRepoDetails,
+  RepoDetailsResponseProps,
+} from "../../utils/getRepoDetails/getRepoDetails"
+
+import { TopContributors } from "./children/TopContributors/TopContributors"
+import { RepoDescription } from "./children/RepoDescription/RepoDescription"
+
+import { BiUser } from "react-icons/bi"
+import { RiGithubLine } from "react-icons/ri"
+
+import styles from "./Preview.module.scss"
 
 export type PreviewProps = {
   user: GetUserProps
@@ -35,9 +39,18 @@ export const Preview = ({
   action,
   theme = "light",
 }: PreviewProps): JSX.Element => {
-  const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()
   const [contributors, setContributors] =
     useState<ContributorsResponseProps[]>()
+  const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()
+
+  useEffect(() => {
+    getContributors({ username: user.username, repo }).then((data) =>
+      setContributors(data)
+    )
+    getRepoDetails({ username: user.username, repo }).then(
+      (data) => data && setRepoDetails(data)
+    )
+  }, [repo, user.username])
 
   const actionButton = useMemo(() => {
     const output = githubActionsButtonList.find(({ title }) => title === action)
@@ -63,22 +76,13 @@ export const Preview = ({
         .finally(() => alert("Star / Unstar handler"))
   }
 
-  useEffect(() => {
-    getRepoDetails({ username: user.username, repo }).then(
-      (data) => data && setRepoDetails(data)
-    )
-    getContributors({ username: user.username, repo }).then((data) =>
-      setContributors(data)
-    )
-  }, [repo, user.username])
-
   return (
     <div className="row" data-cy="preview">
       <div className={classNames("col-4", styles.preview)}>
         <div className="card text-start">
           <h6 className="card-header">Basic Info</h6>
 
-          <div className="card-body">
+          <div className={classNames("card-body", styles.data)}>
             <BiUser /> {user.username}
             <hr />
             <RiGithubLine /> {repo}
@@ -100,40 +104,15 @@ export const Preview = ({
       </div>
 
       <div className={classNames("col-4")}>
-        <div className="card text-start">
-          <h6 className="card-header">Description</h6>
-          <div className="card-body">{repoDetails?.description}</div>
-
-          <Image
-            src={user.avatar_url}
-            className="rounded"
-            alt={user.username}
-            width="200"
-            height="200"
-          />
-        </div>
+        <RepoDescription
+          repoDescription={repoDetails?.description}
+          userAvatar={user.avatar_url}
+          username={user.username}
+        />
       </div>
 
       <div className={classNames("col-4")}>
-        <div className="card text-start">
-          <h6 className="card-header">Top Contributors</h6>
-          <div className="card-body">
-            {!contributors?.length && (
-              <span className="list-group-item list-group-item-action">
-                No Contributor
-              </span>
-            )}
-            <ul className="list-group list-group-flush">
-              {contributors?.map(({ username, html_url }, index) => (
-                <li key={index} className="list-group-item">
-                  <a href={html_url} target="_blank" rel="noreferrer">
-                    <BiUser /> {username}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <TopContributors contributors={contributors} />
       </div>
     </div>
   )
