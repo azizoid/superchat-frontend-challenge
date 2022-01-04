@@ -1,12 +1,16 @@
 import type { NextPage } from "next"
 import { ChangeEvent, useEffect, useState } from "react"
+
+import { BsGithub } from "react-icons/bs"
+
+import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
+import { getUser, GetUserProps } from "../utils/getUser/getUser"
+
 import {
   ActionButtons,
   ButtonActions,
 } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../components/Loader/Loader"
-import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
-import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
 export enum PageStateProps {
   Init,
@@ -82,6 +86,8 @@ const Home: NextPage = () => {
             <ActionButtons action={action} setAction={setAction} />
           </div>
 
+          <hr />
+
           <div className="row">
             {pageState === PageStateProps.Init && (
               <span
@@ -98,6 +104,22 @@ const Home: NextPage = () => {
               >
                 <Loader />
               </span>
+            )}
+            {pageState === PageStateProps.Ready && (
+              <div className="list-group list-group-flush" id="repositoryList">
+                {repositories.length > 0 &&
+                  repositories?.map(({ id, name, html_url }) => (
+                    <a
+                      key={id}
+                      className="list-group-item list-group-item-action"
+                      onClick={() => setRepo(name)}
+                      data-cy="repository-item"
+                    >
+                      <BsGithub /> {name} <br />
+                      <small>{html_url}</small>
+                    </a>
+                  ))}
+              </div>
             )}
           </div>
         </div>
