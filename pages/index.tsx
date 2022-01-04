@@ -12,6 +12,7 @@ import { Loader } from "../ui/Loader/Loader"
 import { Preview } from "../components/Preview/Preview"
 import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
 import { ProgressBar } from "../components/ProgressBar/ProgressBar"
+import { NotFound } from "../ui/NotFound/NotFound"
 
 export enum PageStateProps {
   Init,
@@ -165,6 +166,9 @@ const Home: NextPage = () => {
                     </a>
                   ))}
               </div>
+            )}
+            {pageState === PageStateProps.Error && (
+              <NotFound message="User Not Found." />
             )}
           </div>
         </div>
