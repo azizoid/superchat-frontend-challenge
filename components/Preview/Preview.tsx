@@ -26,6 +26,8 @@ import { RiGithubLine } from "react-icons/ri"
 
 import styles from "./Preview.module.scss"
 import { TweetBtn } from "../../ui/TweetBtn/TweetBtn"
+import { FacebookBtn } from "../../ui/FacebookBtn/FacebookBtn"
+import { LinkedinBtn } from "../../ui/Linkedin/LinkedinBtn"
 
 export type PreviewProps = {
   user: GetUserProps
@@ -108,6 +110,8 @@ export const Preview = ({
             ) : (
               <div data-cy="social-links">
                 <TweetBtn urlId={tweetId} />
+                <FacebookBtn urlId={tweetId} />
+                <LinkedinBtn urlId={tweetId} />
               </div>
             )}
           </div>
