@@ -169,6 +169,7 @@ export const Home: NextPage = () => {
                     "list-group list-group-flush",
                     styles.repositoryList
                   )}
+                  data-cy="repository-list"
                 >
                   {repositories.length > 0 &&
                     repositories?.map(({ id, name, html_url }) => (

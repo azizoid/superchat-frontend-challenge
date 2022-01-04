@@ -41,7 +41,7 @@ describe('Home Page', () => {
     cy.get('input[type=text]').type('azizoid')
     cy.get('button[type=submit]')
       .click()
-      .get('#repositoryList')
+      .get('[data-cy=repository-list]').should('exist')
   })
 
   it('changes theme on theme button click', () => {
@@ -55,7 +55,7 @@ describe('Home Page', () => {
     cy.get('button[type=submit]')
       .click()
 
-    cy.get('#repositoryList')
+    cy.get('[data-cy=repository-list]')
       .get('a[data-cy=repository-item]')
       .first()
       .click()
