@@ -8,7 +8,7 @@ import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
 import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
 import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
-import { Loader } from "../components/Loader/Loader"
+import { Loader } from "../ui/Loader/Loader"
 import { Preview } from "../components/Preview/Preview"
 import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
 
