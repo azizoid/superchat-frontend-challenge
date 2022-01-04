@@ -18,7 +18,11 @@ export const TopContributors = ({
       )}
       <ul className="list-group list-group-flush">
         {contributors?.map(({ username, html_url }, index) => (
-          <li key={index} className="list-group-item">
+          <li
+            key={index}
+            className="list-group-item"
+            data-cy="contributor-item"
+          >
             <a href={html_url} target="_blank" rel="noreferrer">
               <BiUser /> {username}
             </a>
