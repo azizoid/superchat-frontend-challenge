@@ -1,5 +1,5 @@
 import type { NextPage } from "next"
-import { ChangeEvent, useEffect, useState } from "react"
+import React, { ChangeEvent, useEffect, useState } from "react"
 
 import { MdLightMode, MdDarkMode } from "react-icons/md"
 import { BsGithub } from "react-icons/bs"
@@ -9,7 +9,7 @@ import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
 import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
 import { Loader } from "../ui/Loader/Loader"
-import { Preview } from "../components/Preview/Preview"
+import { Preview, PreviewProps } from "../components/Preview/Preview"
 import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
 import { ProgressBar } from "../components/ProgressBar/ProgressBar"
 import { NotFound } from "../ui/NotFound/NotFound"
@@ -21,13 +21,15 @@ export enum PageStateProps {
   Error,
 }
 
-const Home: NextPage = () => {
+export const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("")
   const [user, setUser] = useState<GetUserProps>()
-  const [action, setAction] = useState<ButtonActions>(ButtonActions.Follow) //I prefer to state the type even if we state default value. for the structure of the code
-  const [repo, setRepo] = useState<string>("")
+  const [action, setAction] = useState<PreviewProps["action"]>(
+    ButtonActions.Follow
+  )
+  const [repo, setRepo] = useState<PreviewProps["repo"]>("")
   const [repositories, setRepositories] = useState<GetRepoProps[]>([])
-  const [theme, setTheme] = useState<"dark" | "light">("dark")
+  const [theme, setTheme] = useState<PreviewProps["theme"]>("dark")
   const [tweetId, setTweetId] = useState<string>("")
 
   const [pageState, setPageState] = useState(PageStateProps.Init)
@@ -167,15 +169,13 @@ const Home: NextPage = () => {
                   ))}
               </div>
             )}
-            {pageState === PageStateProps.Error && (
-              <NotFound message="User Not Found." />
-            )}
           </div>
         </div>
         <div className="col-7 text-center">
           <ProgressBar user={user} repo={repo} tweetId={tweetId} />
 
           <hr />
+
           {pageState === PageStateProps.Ready &&
             user &&
             repo &&
@@ -189,6 +189,9 @@ const Home: NextPage = () => {
                 tweetId={tweetId}
               />
             )}
+          {pageState === PageStateProps.Error && (
+            <NotFound message="User Not Found." />
+          )}
         </div>
       </div>
     </main>
