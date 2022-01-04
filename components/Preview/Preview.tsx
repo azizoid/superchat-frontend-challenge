@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import classNames from "classnames"
 
@@ -12,6 +12,10 @@ import { BiUser } from "react-icons/bi"
 import { RiGithubLine } from "react-icons/ri"
 
 import styles from "./Preview.module.scss"
+import {
+  getRepoDetails,
+  RepoDetailsResponseProps,
+} from "../../utils/getRepoDetails/getRepoDetails"
 
 export type PreviewProps = {
   user: GetUserProps
@@ -26,10 +30,18 @@ export const Preview = ({
   action,
   theme = "light",
 }: PreviewProps): JSX.Element => {
+  const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()
+
   const actionButton = useMemo(() => {
     const output = githubActionsButtonList.find(({ title }) => title === action)
     return output?.icon
   }, [action])
+
+  useEffect(() => {
+    getRepoDetails({ username: user.username, repo }).then(
+      (data) => data && setRepoDetails(data)
+    )
+  }, [repo, user.username])
 
   return (
     <div className="row" data-cy="preview">
@@ -50,7 +62,8 @@ export const Preview = ({
                 styles.actionButton
               )}
             >
-              {actionButton} <span>{action}</span>
+              {actionButton} <span>{action}</span> |{" "}
+              <span>{repoDetails?.stargazers_count}</span>
             </button>
           </div>
         </div>
