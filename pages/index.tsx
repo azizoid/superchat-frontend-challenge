@@ -1,9 +1,10 @@
 import type { NextPage } from "next"
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import {
   ActionButtons,
   ButtonActions,
 } from "../components/ActionsBar/ActionsBar"
+import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
 import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
 export enum PageStateProps {
@@ -17,6 +18,8 @@ const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("")
   const [user, setUser] = useState<GetUserProps>()
   const [action, setAction] = useState<ButtonActions>(ButtonActions.Follow) //I prefer to state the type even if we state default value. for the structure of the code
+  const [repo, setRepo] = useState<string>("")
+  const [repositories, setRepositories] = useState<GetRepoProps[]>([])
 
   const [pageState, setPageState] = useState(PageStateProps.Init)
 
@@ -29,8 +32,25 @@ const Home: NextPage = () => {
 
     if (!username?.length) return
 
-    getUser(username).then((data) => setUser(data))
+    getUser(username)
+      .then((data) => setUser(data))
+      .catch(() => setPageState(PageStateProps.Error))
+      .finally(() => setPageState(PageStateProps.Ready))
   }
+
+  useEffect(() => {
+    if (user?.username) {
+      getRepos(user.username)
+        .then((data) => {
+          setRepo("")
+          setRepositories(data)
+        })
+        .catch(() => setPageState(PageStateProps.Error))
+        .finally(() => setPageState(PageStateProps.Ready))
+    } else {
+      setRepositories([])
+    }
+  }, [user?.username])
 
   return (
     <main className="container">
