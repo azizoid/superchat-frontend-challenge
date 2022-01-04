@@ -49,7 +49,7 @@ export const Preview = ({
         <div className="card text-start">
           <h6 className="card-header">Basic Info</h6>
 
-          <div className={classNames("card-body", styles.data)}>
+          <div className="card-body">
             <BiUser /> {user.username}
             <hr />
             <RiGithubLine /> {repo}
