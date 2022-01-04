@@ -17,6 +17,10 @@ import {
   getRepoDetails,
   RepoDetailsResponseProps,
 } from "../../utils/getRepoDetails/getRepoDetails"
+import {
+  ContributorsResponseProps,
+  getContributors,
+} from "../../utils/getContributors/getContributors"
 
 export type PreviewProps = {
   user: GetUserProps
@@ -32,6 +36,8 @@ export const Preview = ({
   theme = "light",
 }: PreviewProps): JSX.Element => {
   const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()
+  const [contributors, setContributors] =
+    useState<ContributorsResponseProps[]>()
 
   const actionButton = useMemo(() => {
     const output = githubActionsButtonList.find(({ title }) => title === action)
@@ -41,6 +47,9 @@ export const Preview = ({
   useEffect(() => {
     getRepoDetails({ username: user.username, repo }).then(
       (data) => data && setRepoDetails(data)
+    )
+    getContributors({ username: user.username, repo }).then((data) =>
+      setContributors(data)
     )
   }, [repo, user.username])
 
@@ -85,7 +94,27 @@ export const Preview = ({
         </div>
       </div>
 
-      <div className={classNames("col-4")}>Top Contributors</div>
+      <div className={classNames("col-4")}>
+        <div className="card text-start">
+          <h6 className="card-header">Top Contributors</h6>
+          <div className="card-body">
+            {!contributors?.length && (
+              <span className="list-group-item list-group-item-action">
+                No Contributor
+              </span>
+            )}
+            <ul className="list-group list-group-flush">
+              {contributors?.map(({ username, html_url }, index) => (
+                <li key={index} className="list-group-item">
+                  <a href={html_url} target="_blank" rel="noreferrer">
+                    <BiUser /> {username}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
