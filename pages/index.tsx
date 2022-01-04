@@ -69,6 +69,10 @@ const Home: NextPage = () => {
     }
   }, [user?.username])
 
+  useEffect(() => {
+    setTweetId("")
+  }, [action, repo, theme, user])
+
   return (
     <main className="container">
       <h3>Creative GitHub Link Generator</h3>
