@@ -1,8 +1,11 @@
 import type { NextPage } from "next"
 import { ChangeEvent, useState } from "react"
+import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("")
+  const [user, setUser] = useState<GetUserProps>()
+
   const onUsernameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
   }
@@ -12,7 +15,7 @@ const Home: NextPage = () => {
 
     if (!username?.length) return
 
-    // TODO get user info
+    getUser(username).then((data) => setUser(data))
   }
 
   return (
