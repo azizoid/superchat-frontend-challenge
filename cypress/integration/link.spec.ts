@@ -23,4 +23,10 @@ describe('Home Page', () => {
     cy.get('button[data-cy=preview-theme]').should('have.class', 'btn-dark').get('[data-cy=preview-stars]').contains('43')
     cy.get('[data-cy=preview-contributors').get('ul > li').should('have.length', 2)
   })
+
+  it('shows Not found if user not in our db', () => {
+    cy.visit('http://localhost:3000/r/someFakeId')
+
+    cy.get('[data-cy=basic-info]').should('not.exist')
+  })
 })
