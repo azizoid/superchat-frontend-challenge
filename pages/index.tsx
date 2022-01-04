@@ -6,10 +6,19 @@ import {
 } from "../components/ActionsBar/ActionsBar"
 import { getUser, GetUserProps } from "../utils/getUser/getUser"
 
+export enum PageStateProps {
+  Init,
+  Loading,
+  Ready,
+  Error,
+}
+
 const Home: NextPage = () => {
   const [username, setUsername] = useState<string>("")
   const [user, setUser] = useState<GetUserProps>()
   const [action, setAction] = useState<ButtonActions>(ButtonActions.Follow) //I prefer to state the type even if we state default value. for the structure of the code
+
+  const [pageState, setPageState] = useState(PageStateProps.Init)
 
   const onUsernameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value)
@@ -52,9 +61,14 @@ const Home: NextPage = () => {
           </div>
 
           <div className="row">
-            <span className="list-group-item text-center">
-              No repositories to display
-            </span>
+            {pageState === PageStateProps.Init && (
+              <span
+                className="list-group-item text-center"
+                data-cy="noRepositoryPanel"
+              >
+                No repositories to display
+              </span>
+            )}
           </div>
         </div>
         <div className="col-7 text-center">Preview Area</div>
