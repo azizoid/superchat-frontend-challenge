@@ -1,40 +1,39 @@
-import type { NextPage } from "next"
-import React, { ChangeEvent, useEffect, useState } from "react"
+import React, { ChangeEvent, useEffect, useState } from 'react'
 
-import { MdLightMode, MdDarkMode } from "react-icons/md"
-import { BsGithub } from "react-icons/bs"
+import Head from 'next/head'
+import { BsGithub } from 'react-icons/bs'
+import { MdLightMode, MdDarkMode } from 'react-icons/md'
 
-import { GetRepoProps, getRepos } from "../utils/getRepos/getRepos"
-import { getUser, GetUserProps } from "../utils/getUser/getUser"
+import classNames from 'classnames'
+import type { NextPage } from 'next'
 
-import { ActionsBar, ButtonActions } from "../components/ActionsBar/ActionsBar"
-import { Loader } from "../ui/Loader/Loader"
-import { Preview, PreviewProps } from "../components/Preview/Preview"
-import { savePreviewData } from "../utils/savePreviewData/savePreviewData"
-import { ProgressBar } from "../components/ProgressBar/ProgressBar"
-import { NotFound } from "../ui/NotFound/NotFound"
-import Head from "next/head"
-import classNames from "classnames"
+import { ActionsBar, ButtonActions } from '../components/ActionsBar/ActionsBar'
+import { Preview, PreviewProps } from '../components/Preview/Preview'
+import { ProgressBar } from '../components/ProgressBar/ProgressBar'
+import styles from '../styles/home.page.module.scss'
+import { Loader } from '../ui/Loader/Loader'
+import { NotFound } from '../ui/NotFound/NotFound'
+import { GetRepoProps, getRepos } from '../utils/getRepos/getRepos'
+import { getUser, GetUserProps } from '../utils/getUser/getUser'
+import { savePreviewData } from '../utils/savePreviewData/savePreviewData'
 
-import styles from "../styles/home.page.module.scss"
-
-export enum PageStateProps {
-  Init,
-  Loading,
-  Ready,
-  Error,
+export const PageStateProps = {
+  Init: 0,
+  Loading: 1,
+  Ready: 2,
+  Error: 3,
 }
 
 export const Home: NextPage = () => {
-  const [username, setUsername] = useState<string>("")
+  const [username, setUsername] = useState<string>('')
   const [user, setUser] = useState<GetUserProps>()
-  const [action, setAction] = useState<PreviewProps["action"]>(
+  const [action, setAction] = useState<PreviewProps['action']>(
     ButtonActions.Follow
   )
-  const [repo, setRepo] = useState<PreviewProps["repo"]>("")
+  const [repo, setRepo] = useState<PreviewProps['repo']>('')
   const [repositories, setRepositories] = useState<GetRepoProps[]>([])
-  const [theme, setTheme] = useState<PreviewProps["theme"]>("dark")
-  const [tweetId, setTweetId] = useState<string>("")
+  const [theme, setTheme] = useState<PreviewProps['theme']>('dark')
+  const [tweetId, setTweetId] = useState<string>('')
 
   const [pageState, setPageState] = useState(PageStateProps.Init)
 
@@ -52,7 +51,7 @@ export const Home: NextPage = () => {
         .then((data) => setUser(data))
         .then(() => setPageState(PageStateProps.Ready))
         .catch(() => {
-          console.warn("username", username)
+          // console.warn('username', username)
           setUser(undefined)
           setPageState(PageStateProps.Error)
         })
@@ -62,7 +61,10 @@ export const Home: NextPage = () => {
     if (user && repo && action && theme) {
       savePreviewData({ username: user.username, repo, action, theme })
         .then((data) => setTweetId(data.data.id))
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error(error)
+        })
     }
   }
 
@@ -70,7 +72,7 @@ export const Home: NextPage = () => {
     if (user?.username) {
       getRepos(user.username)
         .then((data) => {
-          setRepo("")
+          setRepo('')
           setRepositories(data)
         })
         .catch(() => setPageState(PageStateProps.Error))
@@ -81,7 +83,7 @@ export const Home: NextPage = () => {
   }, [user?.username])
 
   useEffect(() => {
-    setTweetId("")
+    setTweetId('')
   }, [action, repo, theme, user])
 
   return (
@@ -110,11 +112,11 @@ export const Home: NextPage = () => {
                   Repos
                 </button>
 
-                {theme === "light" ? (
+                {theme === 'light' ? (
                   <button
                     type="button"
                     className="btn btn-outline-warning"
-                    onClick={() => setTheme("dark")}
+                    onClick={() => setTheme('dark')}
                     data-cy="lightModeBtn"
                   >
                     <MdLightMode /> Mode
@@ -123,7 +125,7 @@ export const Home: NextPage = () => {
                   <button
                     type="button"
                     className="btn btn-outline-dark"
-                    onClick={() => setTheme("light")}
+                    onClick={() => setTheme('light')}
                     data-cy="darkModeBtn"
                   >
                     <MdDarkMode /> Mode
@@ -170,7 +172,7 @@ export const Home: NextPage = () => {
               {pageState === PageStateProps.Ready && (
                 <div
                   className={classNames(
-                    "list-group list-group-flush",
+                    'list-group list-group-flush',
                     styles.repositoryList
                   )}
                   data-cy="repository-list"

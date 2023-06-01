@@ -1,9 +1,9 @@
-import { RepoDetailsResponseProps } from "../../../../utils/getRepoDetails/getRepoDetails"
+import Image from 'next/image'
 
-import Image from "next/image"
+import { RepoDetailsResponseProps } from '../../../../utils/getRepoDetails/getRepoDetails'
 
 export type RepoDescriptionProps = {
-  repoDescription?: RepoDetailsResponseProps["description"]
+  repoDescription?: RepoDetailsResponseProps['description']
   userAvatar: string
   username: string
 }

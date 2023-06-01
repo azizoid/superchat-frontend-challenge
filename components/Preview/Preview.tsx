@@ -1,39 +1,36 @@
-import React, { useEffect, useMemo, useState } from "react"
+import React, { useEffect, useMemo, useState } from 'react'
 
-import classNames from "classnames"
+import { BiUser } from 'react-icons/bi'
+import { RiGithubLine } from 'react-icons/ri'
 
-import {
-  ButtonActions,
-  githubActionsButtonList,
-} from "../ActionsBar/ActionsBar"
-import { GetUserProps } from "../../utils/getUser/getUser"
+import classNames from 'classnames'
 
+import { FacebookBtn } from '../../ui/FacebookBtn/FacebookBtn'
+import { LinkedinBtn } from '../../ui/Linkedin/LinkedinBtn'
+import { TweetBtn } from '../../ui/TweetBtn/TweetBtn'
 import {
   ContributorsResponseProps,
   getContributors,
-} from "../../utils/getContributors/getContributors"
-
+} from '../../utils/getContributors/getContributors'
 import {
   getRepoDetails,
   RepoDetailsResponseProps,
-} from "../../utils/getRepoDetails/getRepoDetails"
+} from '../../utils/getRepoDetails/getRepoDetails'
+import { GetUserProps } from '../../utils/getUser/getUser'
+import {
+  ButtonAction,
+  githubActionsButtonList,
+} from '../ActionsBar/ActionsBar'
 
-import { TopContributors } from "./children/TopContributors/TopContributors"
-import { RepoDescription } from "./children/RepoDescription/RepoDescription"
-
-import { BiUser } from "react-icons/bi"
-import { RiGithubLine } from "react-icons/ri"
-
-import styles from "./Preview.module.scss"
-import { TweetBtn } from "../../ui/TweetBtn/TweetBtn"
-import { FacebookBtn } from "../../ui/FacebookBtn/FacebookBtn"
-import { LinkedinBtn } from "../../ui/Linkedin/LinkedinBtn"
+import { RepoDescription } from './children/RepoDescription/RepoDescription'
+import { TopContributors } from './children/TopContributors/TopContributors'
+import styles from './Preview.module.scss'
 
 export type PreviewProps = {
   user: GetUserProps
   repo: string
-  action: ButtonActions
-  theme: "light" | "dark"
+  action: ButtonAction
+  theme: 'light' | 'dark'
   tweetId: string
 }
 
@@ -41,7 +38,7 @@ export const Preview = ({
   user,
   repo,
   action,
-  theme = "light",
+  theme = 'light',
   tweetId,
 }: PreviewProps): JSX.Element => {
   const [contributors, setContributors] =
@@ -66,28 +63,30 @@ export const Preview = ({
     // TODO: implement authorisation and then try to star
     user?.username &&
       fetch(`https://api.github.com/user/starred/${user.username}/${repo}`, {
-        method: "PUT",
+        method: 'PUT',
         headers: {
-          "Content-Length": "0",
+          'Content-Length': '0',
         },
       })
         .then((data) => {
+          // eslint-disable-next-line no-console
           console.log(data)
         })
         .catch((error) => {
           // For now will error with 401 because we are not authorisated
+          // eslint-disable-next-line no-console
           console.error(error)
         })
-        .finally(() => alert("Star / Unstar handler"))
+        .finally(() => alert('Star / Unstar handler'))
   }
 
   return (
     <div className="row" data-cy="preview">
-      <div className={classNames("col-4", styles.preview)}>
+      <div className={classNames('col-4', styles.preview)}>
         <div className="card text-start" data-cy="basic-info">
           <h6 className="card-header">Basic Info</h6>
 
-          <div className={classNames("card-body", styles.data)}>
+          <div className={classNames('card-body', styles.data)}>
             <span data-cy="preview-username">
               <BiUser /> {user.username}
             </span>
@@ -98,15 +97,15 @@ export const Preview = ({
             <hr />
             <button
               className={classNames(
-                "btn",
-                "btn-sm",
-                theme === "light" ? "btn-light" : "btn-dark",
+                'btn',
+                'btn-sm',
+                theme === 'light' ? 'btn-light' : 'btn-dark',
                 styles.actionButton
               )}
               onClick={onStarHandler}
               data-cy="preview-theme"
             >
-              {actionButton} <span>{action}</span> |{" "}
+              {actionButton} <span>{action}</span> |{' '}
               <span data-cy="preview-stars">
                 {repoDetails?.stargazers_count}
               </span>
@@ -125,7 +124,7 @@ export const Preview = ({
         </div>
       </div>
 
-      <div className={classNames("col-4")}>
+      <div className={classNames('col-4')}>
         <RepoDescription
           repoDescription={repoDetails?.description}
           userAvatar={user.avatar_url}
@@ -133,7 +132,7 @@ export const Preview = ({
         />
       </div>
 
-      <div className={classNames("col-4")} data-cy="preview-contributors">
+      <div className={classNames('col-4')} data-cy="preview-contributors">
         <TopContributors contributors={contributors} />
       </div>
     </div>

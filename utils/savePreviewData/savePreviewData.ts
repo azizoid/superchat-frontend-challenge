@@ -1,11 +1,11 @@
-import { Data } from "../../store/_data"
+import { Data } from '../../store/_data'
 
 export type SavePreviewData = Omit<Data, 'id'>
 
 export const savePreviewData =
   async ({ username, repo, action, theme }: SavePreviewData) =>
-    await fetch("/api/githublink", {
-      method: "POST",
+    await fetch('/api/githublink', {
+      method: 'POST',
       body: JSON.stringify({
         username,
         repo,

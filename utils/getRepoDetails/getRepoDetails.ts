@@ -13,7 +13,7 @@ export const getRepoDetails =
     await fetch(`https://api.github.com/repos/${username}/${repo}`)
       .then(response => {
         if (!response.ok) {
-          throw Error(response.statusText);
+          throw Error(response.statusText)
         }
         return response.json()
       })

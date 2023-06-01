@@ -1,74 +1,77 @@
-import React from "react"
-import { BsGithub, BsSuitHeart, BsStar } from "react-icons/bs"
-import { GoEye, GoRepoForked } from "react-icons/go"
-import { VscIssues, VscCommentDiscussion } from "react-icons/vsc"
-import { HiDownload } from "react-icons/hi"
-import classNames from "classnames"
+import React, { ReactNode } from 'react'
 
-export enum ButtonActions {
-  Follow = "Follow",
-  Sponsor = "Sponsor",
-  Watch = "Watch",
-  Star = "Star",
-  Fork = "Fork",
-  Issue = "Issue",
-  Discuss = "Discuss",
-  Download = "Download",
+import { BsGithub, BsSuitHeart, BsStar } from 'react-icons/bs'
+import { GoEye, GoRepoForked } from 'react-icons/go'
+import { HiDownload } from 'react-icons/hi'
+import { VscIssues, VscCommentDiscussion } from 'react-icons/vsc'
+
+import classNames from 'classnames'
+
+export const ButtonActions = {
+  Follow: 'Follow',
+  Sponsor: 'Sponsor',
+  Watch: 'Watch',
+  Star: 'Star',
+  Fork: 'Fork',
+  Issue: 'Issue',
+  Discuss: 'Discuss',
+  Download: 'Download',
+} as const
+
+export type ButtonAction = keyof typeof ButtonActions;
+
+type GithubActionsButtonList = {
+  title: ButtonAction
+  icon: ReactNode,
+  href: (username: string, repo?: string) => string
 }
 
-export const githubActionsButtonList = [
+export const githubActionsButtonList: GithubActionsButtonList[] = [
   {
     title: ButtonActions.Follow,
     icon: <BsGithub />,
-    href: (username: string, repo: string): string =>
+    href: (username) =>
       `https://github.com/${username}`,
   },
   {
     title: ButtonActions.Sponsor,
-    icon: <BsSuitHeart style={{ color: "red" }} />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/sponsors/${username}}`,
+    icon: <BsSuitHeart style={{ color: 'red' }} />,
+    href: (username) => `https://github.com/sponsors/${username}}`,
   },
   {
     title: ButtonActions.Watch,
     icon: <GoEye />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}/subscription`,
+    href: (username, repo) => `https://github.com/${username}/${repo}/subscription`,
   },
   {
     title: ButtonActions.Star,
     icon: <BsStar />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}`,
+    href: (username, repo) => `https://github.com/${username}/${repo}`,
   },
   {
     title: ButtonActions.Fork,
     icon: <GoRepoForked />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}/fork`,
+    href: (username, repo) => `https://github.com/${username}/${repo}/fork`,
   },
   {
     title: ButtonActions.Issue,
     icon: <VscIssues />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}/issues`,
+    href: (username, repo) => `https://github.com/${username}/${repo}/issues`,
   },
   {
     title: ButtonActions.Discuss,
     icon: <VscCommentDiscussion />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}/discussions`,
+    href: (username, repo) => `https://github.com/${username}/${repo}/discussions`,
   },
   {
     title: ButtonActions.Download,
     icon: <HiDownload />,
-    href: (username: string, repo: string): string =>
-      `https://github.com/${username}/${repo}/archive/HEAD.zip`,
+    href: (username, repo) => `https://github.com/${username}/${repo}/archive/HEAD.zip`,
   },
 ]
 
 export type ActionsBarProps = {
-  action: ButtonActions
+  action: ButtonAction
   setAction: Function
 }
 
@@ -80,8 +83,8 @@ export const ActionsBar = ({
     {githubActionsButtonList.map(({ title, icon }) => (
       <a
         className={classNames(
-          "list-group-item list-group-item-action text-center",
-          title === action && "list-group-item-primary"
+          'list-group-item list-group-item-action text-center',
+          title === action && 'list-group-item-primary'
         )}
         key={title}
         onClick={() => setAction(title)}

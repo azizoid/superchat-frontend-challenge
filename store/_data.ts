@@ -1,12 +1,13 @@
-import { ButtonActions } from './../components/ActionsBar/ActionsBar';
-import { PreviewProps } from "../components/Preview/Preview"
+import { PreviewProps } from '../components/Preview/Preview'
+
+import { ButtonAction } from './../components/ActionsBar/ActionsBar'
 
 export type Data = {
   id: string,
   username: string,
   repo: string,
-  action: ButtonActions,
-  theme: PreviewProps["theme"],
+  action: ButtonAction,
+  theme: PreviewProps['theme'],
 }
 
 export type GithubLinksDataProps = {
