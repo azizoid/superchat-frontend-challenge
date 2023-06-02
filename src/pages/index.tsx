@@ -73,7 +73,9 @@ export const Home: NextPage = () => {
       getRepos(user.username)
         .then((data) => {
           setRepo('')
-          setRepositories(data)
+          if (data) {
+            setRepositories(data)
+          }
         })
         .catch(() => setPageState(PageStateProps.Error))
         .finally(() => setPageState(PageStateProps.Ready))
