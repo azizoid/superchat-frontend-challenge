@@ -1,6 +1,6 @@
 import { BiUser } from 'react-icons/bi'
 
-import { ContributorsResponseProps } from '../../../../utils/getContributors/getContributors'
+import { ContributorsResponseProps } from '@/utils/getContributors/getContributors'
 
 export type TopContributorsProps = {
   contributors?: ContributorsResponseProps[]

@@ -5,18 +5,6 @@ import { RiGithubLine } from 'react-icons/ri'
 
 import classNames from 'classnames'
 
-import { FacebookBtn } from '../../ui/FacebookBtn/FacebookBtn'
-import { LinkedinBtn } from '../../ui/Linkedin/LinkedinBtn'
-import { TweetBtn } from '../../ui/TweetBtn/TweetBtn'
-import {
-  ContributorsResponseProps,
-  getContributors,
-} from '../../utils/getContributors/getContributors'
-import {
-  getRepoDetails,
-  RepoDetailsResponseProps,
-} from '../../utils/getRepoDetails/getRepoDetails'
-import { GetUserProps } from '../../utils/getUser/getUser'
 import {
   ButtonAction,
   githubActionsButtonList,
@@ -25,6 +13,19 @@ import {
 import { RepoDescription } from './children/RepoDescription/RepoDescription'
 import { TopContributors } from './children/TopContributors/TopContributors'
 import styles from './Preview.module.scss'
+
+import { FacebookBtn } from '@/ui/FacebookBtn/FacebookBtn'
+import { LinkedinBtn } from '@/ui/Linkedin/LinkedinBtn'
+import { TweetBtn } from '@/ui/TweetBtn/TweetBtn'
+import {
+  ContributorsResponseProps,
+  getContributors,
+} from '@/utils/getContributors/getContributors'
+import {
+  getRepoDetails,
+  RepoDetailsResponseProps,
+} from '@/utils/getRepoDetails/getRepoDetails'
+import { GetUserProps } from '@/utils/getUser/getUser'
 
 export type PreviewProps = {
   user: GetUserProps

@@ -1,6 +1,5 @@
-import { PreviewProps } from '../components/Preview/Preview'
-
-import { ButtonAction } from './../components/ActionsBar/ActionsBar'
+import { ButtonAction } from '@/components/ActionsBar/ActionsBar'
+import { PreviewProps } from '@/components/Preview/Preview'
 
 export type Data = {
   id: string,

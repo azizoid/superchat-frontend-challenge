@@ -1,6 +1,6 @@
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
 
-import { GetUserProps } from '../../utils/getUser/getUser'
+import { GetUserProps } from '@/utils/getUser/getUser'
 
 export type ProgressBarProps = {
   user?: GetUserProps

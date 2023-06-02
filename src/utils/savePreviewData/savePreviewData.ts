@@ -1,4 +1,4 @@
-import { Data } from '../../store/_data'
+import { Data } from '@/store/_data'
 
 export type SavePreviewData = Omit<Data, 'id'>
 

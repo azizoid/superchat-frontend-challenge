@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import { RepoDetailsResponseProps } from '../../../../utils/getRepoDetails/getRepoDetails'
+import { RepoDetailsResponseProps } from '@/utils/getRepoDetails/getRepoDetails'
 
 export type RepoDescriptionProps = {
   repoDescription?: RepoDetailsResponseProps['description']

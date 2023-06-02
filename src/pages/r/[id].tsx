@@ -4,13 +4,14 @@ import { useRouter } from 'next/router'
 
 import { NextPage } from 'next'
 
-import { Preview } from '../../components/Preview/Preview'
-import { Data } from '../../store/_data'
-import styles from '../../styles/r.page.module.scss'
-import { Loader } from '../../ui/Loader/Loader'
-import { NotFound } from '../../ui/NotFound/NotFound'
-import { getUser, GetUserProps } from '../../utils/getUser/getUser'
 import { PageStateProps } from '../index'
+
+import { Preview } from '@/components/Preview/Preview'
+import { Data } from '@/store/_data'
+import styles from '@/styles/r.page.module.scss'
+import { Loader } from '@/ui/Loader/Loader'
+import { NotFound } from '@/ui/NotFound/NotFound'
+import { getUser, GetUserProps } from '@/utils/getUser/getUser'
 
 export const GetGithubLink: NextPage = () => {
   const router = useRouter()

@@ -2,7 +2,7 @@
 import cryptoRandomString from 'crypto-random-string'
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { githubLinksData, Data, GithubLinksDataProps } from '../../../store/_data'
+import { githubLinksData, Data, GithubLinksDataProps } from '@/store/_data'
 
 export default function handler(
   req: NextApiRequest,
