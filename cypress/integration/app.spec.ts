@@ -3,23 +3,35 @@ describe('Home Page', () => {
   const repo = 'nam.az'
 
   beforeEach(() => {
-    cy.intercept('GET', `https://api.github.com/users/${username}`, (req) => {
+    cy.intercept('GET', `https://api.github.com/users/${username}`, req => {
       req.reply({ fixture: 'getUser.json' })
     }).as('getUser')
-    cy.intercept('GET', `https://api.github.com/users/${username}/repos`, (req) => {
-      req.reply({ fixture: 'getRepos.json' })
-    }).as('getRepos')
-    cy.intercept('GET', `https://api.github.com/repos/${username}/${repo}`, (req) => {
-      req.reply({ fixture: 'getRepoDetails.json' })
-    }).as('getRepoDetails')
-    cy.intercept('GET', `https://api.github.com/repos/${username}/${repo}/contributors?per_page=10&anon=true`, (req) => {
-      req.reply({ fixture: 'getContributors.json' })
-    }).as('getContributors')
+    cy.intercept(
+      'GET',
+      `https://api.github.com/users/${username}/repos`,
+      req => {
+        req.reply({ fixture: 'getRepos.json' })
+      },
+    ).as('getRepos')
+    cy.intercept(
+      'GET',
+      `https://api.github.com/repos/${username}/${repo}`,
+      req => {
+        req.reply({ fixture: 'getRepoDetails.json' })
+      },
+    ).as('getRepoDetails')
+    cy.intercept(
+      'GET',
+      `https://api.github.com/repos/${username}/${repo}/contributors?per_page=10&anon=true`,
+      req => {
+        req.reply({ fixture: 'getContributors.json' })
+      },
+    ).as('getContributors')
 
-    cy.intercept('POST', 'https://api.github.com/api/githublink/*', (req) => {
+    cy.intercept('POST', 'https://api.github.com/api/githublink/*', req => {
       req.reply({
         statusCode: 200,
-        fixture: 'savePreviewData.json'
+        fixture: 'savePreviewData.json',
       })
     }).as('savePreviewData')
 
@@ -39,41 +51,42 @@ describe('Home Page', () => {
   })
 
   it('gets repository list by username', () => {
-    cy.get('[data-cy=repository-list]').should("not.exist")
+    cy.get('[data-cy=repository-list]').should('not.exist')
 
     cy.get('input[type=text]').type(username)
     cy.get('button[type=submit]')
       .click()
-      .get('[data-cy=repository-list]').should('exist')
+      .get('[data-cy=repository-list]')
+      .should('exist')
   })
 
   it('removes old repository list if user does not exist', () => {
-
     cy.get('input[type=text]').type(username)
     cy.get('button[type=submit]')
       .click()
-      .get('[data-cy=repository-list]').should('exist')
+      .get('[data-cy=repository-list]')
+      .should('exist')
 
-    cy.intercept('GET', 'https://api.github.com/users/fakeUser', (req) => {
+    cy.intercept('GET', 'https://api.github.com/users/fakeUser', req => {
       req.reply({ fixture: 'getFakeUser.json' })
     }).as('getFakeUser')
 
     cy.get('input[type=text]').type('fakeUser')
-    cy.get('button[type=submit]')
-      .click()
-    cy.get('[data-cy=repository-list]').should("not.exist")
+    cy.get('button[type=submit]').click()
+    cy.get('[data-cy=repository-list]').should('not.exist')
   })
 
   it('changes theme on theme button click', () => {
-    cy.get('button[data-cy=darkModeBtn]').click().get('button[data-cy=lightModeBtn')
+    cy.get('button[data-cy=darkModeBtn]')
+      .click()
+      .get('button[data-cy=lightModeBtn')
   })
 
   it('tests the whole cycle', () => {
     cy.get('[data-cy=noRepositoryPanel]')
     cy.get('input[type=text]').type(username)
 
-    cy.get('button[type=submit]')
-      .click()
+    cy.get('button[type=submit]').click()
 
     cy.get('[data-cy=repository-list]')
       .get('a[data-cy=repository-item]')
@@ -82,6 +95,8 @@ describe('Home Page', () => {
 
     cy.get('button[data-cy=saveBtn]').should('be.enabled').click()
 
-    cy.get('[data-cy=preview]').get('[data-cy=social-links]').should('be.visible')
+    cy.get('[data-cy=preview]')
+      .get('[data-cy=social-links]')
+      .should('be.visible')
   })
 })

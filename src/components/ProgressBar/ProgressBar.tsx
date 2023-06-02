@@ -8,11 +8,7 @@ export type ProgressBarProps = {
   tweetId?: string
 }
 
-export const ProgressBar = ({
-  user,
-  repo,
-  tweetId,
-}: ProgressBarProps) => (
+export const ProgressBar = ({ user, repo, tweetId }: ProgressBarProps) => (
   <div className="row" data-cy="progress-bar">
     <div className="col">
       Username

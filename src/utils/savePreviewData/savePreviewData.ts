@@ -2,9 +2,12 @@ import { Data } from '@/store/_data'
 
 export type SavePreviewData = Omit<Data, 'id'>
 
-export const savePreviewData = async (
-  { username, repo, action, theme }: SavePreviewData
-): Promise<any | undefined> => { // you should replace `any` with the actual type of the response
+export const savePreviewData = async ({
+  username,
+  repo,
+  action,
+  theme,
+}: SavePreviewData): Promise<any | undefined> => {
   try {
     const response = await fetch('/api/githublink', {
       method: 'POST',

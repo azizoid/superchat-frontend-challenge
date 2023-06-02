@@ -18,11 +18,11 @@ export const ButtonActions = {
   Download: 'Download',
 } as const
 
-export type ButtonAction = keyof typeof ButtonActions;
+export type ButtonAction = keyof typeof ButtonActions
 
 type GithubActionsButtonList = {
   title: ButtonAction
-  icon: ReactNode,
+  icon: ReactNode
   href: (username: string, repo?: string) => string
 }
 
@@ -30,18 +30,18 @@ export const githubActionsButtonList: GithubActionsButtonList[] = [
   {
     title: ButtonActions.Follow,
     icon: <BsGithub />,
-    href: (username) =>
-      `https://github.com/${username}`,
+    href: username => `https://github.com/${username}`,
   },
   {
     title: ButtonActions.Sponsor,
     icon: <BsSuitHeart style={{ color: 'red' }} />,
-    href: (username) => `https://github.com/sponsors/${username}}`,
+    href: username => `https://github.com/sponsors/${username}}`,
   },
   {
     title: ButtonActions.Watch,
     icon: <GoEye />,
-    href: (username, repo) => `https://github.com/${username}/${repo}/subscription`,
+    href: (username, repo) =>
+      `https://github.com/${username}/${repo}/subscription`,
   },
   {
     title: ButtonActions.Star,
@@ -61,12 +61,14 @@ export const githubActionsButtonList: GithubActionsButtonList[] = [
   {
     title: ButtonActions.Discuss,
     icon: <VscCommentDiscussion />,
-    href: (username, repo) => `https://github.com/${username}/${repo}/discussions`,
+    href: (username, repo) =>
+      `https://github.com/${username}/${repo}/discussions`,
   },
   {
     title: ButtonActions.Download,
     icon: <HiDownload />,
-    href: (username, repo) => `https://github.com/${username}/${repo}/archive/HEAD.zip`,
+    href: (username, repo) =>
+      `https://github.com/${username}/${repo}/archive/HEAD.zip`,
   },
 ]
 
@@ -75,16 +77,13 @@ export type ActionsBarProps = {
   setAction: Function
 }
 
-export const ActionsBar = ({
-  action,
-  setAction,
-}: ActionsBarProps) => (
+export const ActionsBar = ({ action, setAction }: ActionsBarProps) => (
   <div className="list-group list-group-horizontal" data-cy="actions_bar">
     {githubActionsButtonList.map(({ title, icon }) => (
       <a
         className={classNames(
           'list-group-item list-group-item-action text-center',
-          title === action && 'list-group-item-primary'
+          title === action && 'list-group-item-primary',
         )}
         key={title}
         onClick={() => setAction(title)}

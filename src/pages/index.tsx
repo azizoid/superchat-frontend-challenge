@@ -28,7 +28,7 @@ export const Home: NextPage = () => {
   const [username, setUsername] = useState<string>('')
   const [user, setUser] = useState<GetUserProps>()
   const [action, setAction] = useState<PreviewProps['action']>(
-    ButtonActions.Follow
+    ButtonActions.Follow,
   )
   const [repo, setRepo] = useState<PreviewProps['repo']>('')
   const [repositories, setRepositories] = useState<GetRepoProps[]>([])
@@ -48,7 +48,7 @@ export const Home: NextPage = () => {
     if (!username?.length) setPageState(PageStateProps.Error)
     else
       getUser(username)
-        .then((data) => setUser(data))
+        .then(data => setUser(data))
         .then(() => setPageState(PageStateProps.Ready))
         .catch(() => {
           // console.warn('username', username)
@@ -60,8 +60,8 @@ export const Home: NextPage = () => {
   const onPreviewSaveHandler = () => {
     if (user && repo && action && theme) {
       savePreviewData({ username: user.username, repo, action, theme })
-        .then((data) => setTweetId(data.data.id))
-        .catch((error) => {
+        .then(data => setTweetId(data.data.id))
+        .catch(error => {
           // eslint-disable-next-line no-console
           console.error(error)
         })
@@ -71,7 +71,7 @@ export const Home: NextPage = () => {
   useEffect(() => {
     if (user?.username) {
       getRepos(user.username)
-        .then((data) => {
+        .then(data => {
           setRepo('')
           if (data) {
             setRepositories(data)
@@ -175,7 +175,7 @@ export const Home: NextPage = () => {
                 <div
                   className={classNames(
                     'list-group list-group-flush',
-                    styles.repositoryList
+                    styles.repositoryList,
                   )}
                   data-cy="repository-list"
                 >

@@ -5,9 +5,7 @@ import { ContributorsResponseProps } from '@/utils/getContributors/getContributo
 export type TopContributorsProps = {
   contributors?: ContributorsResponseProps[]
 }
-export const TopContributors = ({
-  contributors,
-}: TopContributorsProps) => (
+export const TopContributors = ({ contributors }: TopContributorsProps) => (
   <div className="card text-start">
     <h6 className="card-header">Top Contributors</h6>
     <div className="card-body">

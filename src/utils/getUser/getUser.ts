@@ -1,14 +1,19 @@
 export type GetUserProps = {
-  avatar_url: string;
-  username: string;
-  bio: string;
-  html_url: string;
+  avatar_url: string
+  username: string
+  bio: string
+  html_url: string
 }
 
-type GithubUsersItem = { avatar_url: string, login: string, bio: string, html_url: string }
+type GithubUsersItem = {
+  avatar_url: string
+  login: string
+  bio: string
+  html_url: string
+}
 
 export const getUser = async (
-  username: string
+  username: string,
 ): Promise<GetUserProps | undefined> => {
   try {
     const response = await fetch(`https://api.github.com/users/${username}`)
@@ -17,7 +22,8 @@ export const getUser = async (
       throw Error(response.statusText)
     }
 
-    const { avatar_url, login, bio, html_url }: GithubUsersItem = await response.json()
+    const { avatar_url, login, bio, html_url }: GithubUsersItem =
+      await response.json()
     return {
       avatar_url,
       username: login,

@@ -5,7 +5,7 @@ import { githubLinksData, Data } from '@/store/_data'
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data>
+  res: NextApiResponse<Data>,
 ) {
   const { id } = req.query
 

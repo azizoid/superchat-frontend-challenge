@@ -5,10 +5,7 @@ import { RiGithubLine } from 'react-icons/ri'
 
 import classNames from 'classnames'
 
-import {
-  ButtonAction,
-  githubActionsButtonList,
-} from '../ActionsBar/ActionsBar'
+import { ButtonAction, githubActionsButtonList } from '../ActionsBar/ActionsBar'
 
 import { RepoDescription } from './children/RepoDescription/RepoDescription'
 import { TopContributors } from './children/TopContributors/TopContributors'
@@ -47,11 +44,11 @@ export const Preview = ({
   const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()
 
   useEffect(() => {
-    getContributors({ username: user.username, repo }).then((data) =>
-      setContributors(data)
+    getContributors({ username: user.username, repo }).then(data =>
+      setContributors(data),
     )
     getRepoDetails({ username: user.username, repo }).then(
-      (data) => data && setRepoDetails(data)
+      data => data && setRepoDetails(data),
     )
   }, [repo, user.username])
 
@@ -69,11 +66,11 @@ export const Preview = ({
           'Content-Length': '0',
         },
       })
-        .then((data) => {
+        .then(data => {
           // eslint-disable-next-line no-console
           console.log(data)
         })
-        .catch((error) => {
+        .catch(error => {
           // For now will error with 401 because we are not authorisated
           // eslint-disable-next-line no-console
           console.error(error)
@@ -101,7 +98,7 @@ export const Preview = ({
                 'btn',
                 'btn-sm',
                 theme === 'light' ? 'btn-light' : 'btn-dark',
-                styles.actionButton
+                styles.actionButton,
               )}
               onClick={onStarHandler}
               data-cy="preview-theme"

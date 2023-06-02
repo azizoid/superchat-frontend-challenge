@@ -1,23 +1,26 @@
 export type GetContributorProps = {
-  username: string;
-  repo: string;
+  username: string
+  repo: string
 }
 
 export type ContributorsResponseProps = {
-  username: string;
-  html_url: string;
+  username: string
+  html_url: string
 }
 
 type GithubResponseItem = {
-  login: string;
-  html_url: string;
+  login: string
+  html_url: string
 }
 
-export const getContributors = async (
-  { username, repo }: GetContributorProps
-): Promise<ContributorsResponseProps[] | undefined> => {
+export const getContributors = async ({
+  username,
+  repo,
+}: GetContributorProps): Promise<ContributorsResponseProps[] | undefined> => {
   try {
-    const response = await fetch(`https://api.github.com/repos/${username}/${repo}/contributors?per_page=10&anon=true`)
+    const response = await fetch(
+      `https://api.github.com/repos/${username}/${repo}/contributors?per_page=10&anon=true`,
+    )
 
     if (!response.ok) {
       throw Error(response.statusText)
@@ -30,7 +33,6 @@ export const getContributors = async (
       html_url,
     }))
     return result
-
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('getContributors', error)
