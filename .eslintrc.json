@@ -19,21 +19,25 @@
             "position": "before"
           },
           {
-            "pattern": "@next/*",
-            "group": "internal",
-            "position": "before"
+            "pattern": "@/**",
+            "group": "parent",
+            "position": "after"
           },
           {
             "pattern": "src/**",
-            "group": "internal"
+            "group": "parent"
           },
           {
-            "pattern": "*",
-            "group": "external",
-            "position": "after"
+            "pattern": "./*",
+            "group": "parent",
+            "position": "before"
+          },
+          {
+            "pattern": "../*",
+            "group": "parent",
+            "position": "before"
           }
         ],
-        "pathGroupsExcludedImportTypes": ["react"],
         "newlines-between": "always",
         "alphabetize": {
           "order": "asc",

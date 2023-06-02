@@ -1,12 +1,9 @@
+import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
-import { useRouter } from 'next/router'
-
-import { NextPage } from 'next'
-
-import { PageStateProps } from '../index'
-
 import { Preview } from '@/components/Preview/Preview'
+import { PageStateProps } from '@/pages/index'
 import { Data } from '@/store/_data'
 import styles from '@/styles/r.page.module.scss'
 import { Loader } from '@/ui/Loader/Loader'

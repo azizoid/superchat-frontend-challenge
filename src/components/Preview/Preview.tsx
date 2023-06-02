@@ -1,15 +1,11 @@
+import classNames from 'classnames'
 import React, { useEffect, useMemo, useState } from 'react'
-
 import { BiUser } from 'react-icons/bi'
 import { RiGithubLine } from 'react-icons/ri'
 
-import classNames from 'classnames'
+import styles from './Preview.module.scss'
 
 import { ButtonAction, githubActionsButtonList } from '../ActionsBar/ActionsBar'
-
-import { RepoDescription } from './children/RepoDescription/RepoDescription'
-import { TopContributors } from './children/TopContributors/TopContributors'
-import styles from './Preview.module.scss'
 
 import { FacebookBtn } from '@/ui/FacebookBtn/FacebookBtn'
 import { LinkedinBtn } from '@/ui/Linkedin/LinkedinBtn'
@@ -23,6 +19,9 @@ import {
   RepoDetailsResponseProps,
 } from '@/utils/getRepoDetails/getRepoDetails'
 import { GetUserProps } from '@/utils/getUser/getUser'
+
+import { RepoDescription } from './children/RepoDescription/RepoDescription'
+import { TopContributors } from './children/TopContributors/TopContributors'
 
 export type PreviewProps = {
   user: GetUserProps

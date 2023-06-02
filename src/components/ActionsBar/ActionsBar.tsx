@@ -1,11 +1,9 @@
+import classNames from 'classnames'
 import React, { ReactNode } from 'react'
-
 import { BsGithub, BsSuitHeart, BsStar } from 'react-icons/bs'
 import { GoEye, GoRepoForked } from 'react-icons/go'
 import { HiDownload } from 'react-icons/hi'
 import { VscIssues, VscCommentDiscussion } from 'react-icons/vsc'
-
-import classNames from 'classnames'
 
 export const ButtonActions = {
   Follow: 'Follow',

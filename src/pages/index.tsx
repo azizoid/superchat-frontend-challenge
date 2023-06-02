@@ -1,11 +1,9 @@
-import React, { ChangeEvent, useEffect, useState } from 'react'
-
-import Head from 'next/head'
-import { BsGithub } from 'react-icons/bs'
-import { MdLightMode, MdDarkMode } from 'react-icons/md'
-
 import classNames from 'classnames'
 import type { NextPage } from 'next'
+import Head from 'next/head'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { BsGithub } from 'react-icons/bs'
+import { MdLightMode, MdDarkMode } from 'react-icons/md'
 
 import { ActionsBar, ButtonActions } from '@/components/ActionsBar/ActionsBar'
 import { Preview, PreviewProps } from '@/components/Preview/Preview'
