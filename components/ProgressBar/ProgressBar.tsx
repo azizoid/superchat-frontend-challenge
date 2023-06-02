@@ -12,7 +12,7 @@ export const ProgressBar = ({
   user,
   repo,
   tweetId,
-}: ProgressBarProps): JSX.Element => (
+}: ProgressBarProps) => (
   <div className="row" data-cy="progress-bar">
     <div className="col">
       Username

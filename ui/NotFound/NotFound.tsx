@@ -3,5 +3,5 @@ export type NotFoundProps = {
 }
 
 export const NotFound = ({
-  message = "Link Not Found or Expired",
-}): JSX.Element => <div className="alert alert-danger">{message}</div>
+  message = 'Link Not Found or Expired',
+}) => <div className="alert alert-danger">{message}</div>

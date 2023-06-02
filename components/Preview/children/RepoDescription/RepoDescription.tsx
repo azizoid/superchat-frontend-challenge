@@ -12,7 +12,7 @@ export const RepoDescription = ({
   repoDescription,
   userAvatar,
   username,
-}: RepoDescriptionProps): JSX.Element => (
+}: RepoDescriptionProps) => (
   <div className="card text-start">
     <h6 className="card-header">Description</h6>
     <div className="card-body">{repoDescription}</div>

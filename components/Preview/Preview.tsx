@@ -40,7 +40,7 @@ export const Preview = ({
   action,
   theme = 'light',
   tweetId,
-}: PreviewProps): JSX.Element => {
+}: PreviewProps) => {
   const [contributors, setContributors] =
     useState<ContributorsResponseProps[]>()
   const [repoDetails, setRepoDetails] = useState<RepoDetailsResponseProps>()

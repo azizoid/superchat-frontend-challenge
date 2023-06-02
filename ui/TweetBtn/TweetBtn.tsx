@@ -1,4 +1,4 @@
-import { TwitterIcon, TwitterShareButton } from "react-share"
+import { TwitterIcon, TwitterShareButton } from 'react-share'
 
 export type TweetBtnProps = {
   urlId: string
@@ -7,8 +7,8 @@ export type TweetBtnProps = {
 
 export const TweetBtn = ({
   urlId,
-  message = "Follow our juicy link",
-}: TweetBtnProps): JSX.Element => (
+  message = 'Follow our juicy link',
+}: TweetBtnProps) => (
   <TwitterShareButton
     title={message}
     url={`${process.env.NEXT_PUBLIC_HOST}/r/${urlId}`}

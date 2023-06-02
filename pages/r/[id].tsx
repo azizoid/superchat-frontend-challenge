@@ -21,46 +21,54 @@ export const GetGithubLink: NextPage = () => {
   const [user, setUser] = useState<GetUserProps>()
 
   useEffect(() => {
-    if (id) {
-      fetch(`/api/githublink/${id}`)
-        .then((response) => {
+    const fetchData = async () => {
+      try {
+        if (id) {
+          const response = await fetch(`/api/githublink/${id}`)
           if (!response.ok) {
-            throw Error(response.statusText)
+            throw new Error(response.statusText)
           }
-          return response.json()
-        })
-        .then((data) => {
+          const data = await response.json()
           setPreviewData(data)
-          setPageState(PageStateProps.Ready) // Switching state to ready just in case so we will not get stuck in Loading Mode
-        })
-        .catch(() => setPageState(PageStateProps.Error))
+          setPageState(PageStateProps.Ready)
+        }
+      } catch (error) {
+        setPageState(PageStateProps.Error)
+      }
     }
+    fetchData()
   }, [id])
 
   useEffect(() => {
-    if (previewData?.username) {
-      getUser(previewData?.username)
-        .then((data) => {
+    const fetchUser = async () => {
+      try {
+        if (previewData?.username) {
+          const data = await getUser(previewData.username)
           setUser(data)
           setPageState(PageStateProps.Ready)
-        })
-        .catch(() => setPageState(PageStateProps.Error))
+        }
+      } catch (error) {
+        setPageState(PageStateProps.Error)
+      }
     }
+    fetchUser()
   }, [previewData?.username])
 
   return (
     <div className="container">
       <div className={styles.previewPage}>
         <div className="col-md-12 col-lg-8 offset-lg-2">
-          {pageState === PageStateProps.Loading && (
+          {pageState === PageStateProps.Loading ? (
             <span className="list-group-item text-center">
               <Loader />
             </span>
-          )}
-          {pageState === PageStateProps.Error && (
+          ) : null}
+
+          {pageState === PageStateProps.Error ? (
             <NotFound message="User Not Found." />
-          )}
-          {pageState === PageStateProps.Ready && previewData && user && (
+          ) : null}
+
+          {pageState === PageStateProps.Ready && previewData && user ? (
             <Preview
               user={user}
               repo={previewData.repo}
@@ -68,7 +76,7 @@ export const GetGithubLink: NextPage = () => {
               theme={previewData.theme}
               tweetId={previewData.id}
             />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

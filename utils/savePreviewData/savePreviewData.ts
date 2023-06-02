@@ -2,9 +2,11 @@ import { Data } from '../../store/_data'
 
 export type SavePreviewData = Omit<Data, 'id'>
 
-export const savePreviewData =
-  async ({ username, repo, action, theme }: SavePreviewData) =>
-    await fetch('/api/githublink', {
+export const savePreviewData = async (
+  { username, repo, action, theme }: SavePreviewData
+): Promise<any | undefined> => { // you should replace `any` with the actual type of the response
+  try {
+    const response = await fetch('/api/githublink', {
       method: 'POST',
       body: JSON.stringify({
         username,
@@ -13,14 +15,15 @@ export const savePreviewData =
         theme,
       }),
     })
-      .then((response) => {
-        if (!response.ok) {
-          throw Error(response.statusText)
-        }
-        return response.json()
-      })
-      .then(data => {
-        console.log(data)
-        return data
-      })
-      .catch(error => console.error('getRepos', error))
+
+    if (!response.ok) {
+      throw Error(response.statusText)
+    }
+
+    const data = await response.json()
+    return data
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('savePreviewData', error)
+  }
+}

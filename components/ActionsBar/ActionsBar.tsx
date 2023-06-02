@@ -78,7 +78,7 @@ export type ActionsBarProps = {
 export const ActionsBar = ({
   action,
   setAction,
-}: ActionsBarProps): JSX.Element => (
+}: ActionsBarProps) => (
   <div className="list-group list-group-horizontal" data-cy="actions_bar">
     {githubActionsButtonList.map(({ title, icon }) => (
       <a
